@@ -77,7 +77,7 @@ public class ManageItemsFormController {
             /*Get all items*/
             ItemDAOImpl itemDAO = new ItemDAOImpl();
             ArrayList<ItemDTO> allItems = itemDAO.getAllItems();
-           for(ItemDTO item : allItems){
+            for(ItemDTO item : allItems){
                tblItems.getItems().add(new ItemTM(item.getCode(),item.getDescription(),item.getUnitPrice(),item.getQtyOnHand()));
            }
         } catch (SQLException e) {
