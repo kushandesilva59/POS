@@ -42,6 +42,9 @@ public class ManageItemsFormController {
     public JFXTextField txtUnitPrice;
     public JFXButton btnAddNewItem;
 
+    ItemDAOInterface itemDAO = new ItemDAOImpl();
+
+
     public void initialize() {
         tblItems.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("code"));
         tblItems.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -76,7 +79,6 @@ public class ManageItemsFormController {
         tblItems.getItems().clear();
         try {
             /*Get all items*/
-            ItemDAOInterface itemDAO = new ItemDAOImpl();
             ArrayList<ItemDTO> allItems = itemDAO.getAllItems();
             for(ItemDTO item : allItems){
                tblItems.getItems().add(new ItemTM(item.getCode(),item.getDescription(),item.getUnitPrice(),item.getQtyOnHand()));
@@ -136,7 +138,6 @@ public class ManageItemsFormController {
             if (!existItem(code)) {
                 new Alert(Alert.AlertType.ERROR, "There is no such item associated with the id " + code).show();
             }
-            ItemDAOInterface itemDAO = new ItemDAOImpl();
             itemDAO.deleteItem(code);
 
             tblItems.getItems().remove(tblItems.getSelectionModel().getSelectedItem());
@@ -177,7 +178,6 @@ public class ManageItemsFormController {
                     new Alert(Alert.AlertType.ERROR, code + " already exists").show();
                 }
                 //Save Item
-                ItemDAOInterface itemDAO = new ItemDAOImpl();
                 itemDAO.saveItem(code,description,unitPrice,qtyOnHand);
                 tblItems.getItems().add(new ItemTM(code, description, unitPrice, qtyOnHand));
 
@@ -193,7 +193,6 @@ public class ManageItemsFormController {
                     new Alert(Alert.AlertType.ERROR, "There is no such item associated with the id " + code).show();
                 }
                 /*Update Item*/
-                ItemDAOImpl itemDAO = new ItemDAOImpl();
                 itemDAO.updateItem(new ItemDTO(code,description,unitPrice,qtyOnHand));
 
                 ItemTM selectedItem = tblItems.getSelectionModel().getSelectedItem();
@@ -213,14 +212,12 @@ public class ManageItemsFormController {
 
 
     private boolean existItem(String code) throws SQLException, ClassNotFoundException {
-        ItemDAOInterface itemDAO = new ItemDAOImpl();
         return itemDAO.ifExistItem(code);
     }
 
 
     private String generateNewId() {
         try {
-            ItemDAOInterface itemDAO = new ItemDAOImpl();
             itemDAO.generateNewId();
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
