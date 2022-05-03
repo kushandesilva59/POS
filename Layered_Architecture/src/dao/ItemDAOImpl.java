@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class ItemDAOImpl {
+public class ItemDAOImpl implements ItemDAOInterface{
     public ArrayList<ItemDTO> getAllItems() throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getDbConnection().getConnection();
         Statement stm = connection.createStatement();
@@ -54,5 +54,15 @@ public class ItemDAOImpl {
         } else {
             return "I00-001";
         }
+    }
+
+    public boolean saveItem(String code,String description,BigDecimal unitPrice,int qtyOnHand) throws SQLException, ClassNotFoundException {
+        Connection connection = DBConnection.getDbConnection().getConnection();
+        PreparedStatement pstm = connection.prepareStatement("INSERT INTO Item (code, description, unitPrice, qtyOnHand) VALUES (?,?,?,?)");
+        pstm.setString(1, code);
+        pstm.setString(2, description);
+        pstm.setBigDecimal(3, unitPrice);
+        pstm.setInt(4, qtyOnHand);
+        return pstm.executeUpdate()>0;
     }
 }
