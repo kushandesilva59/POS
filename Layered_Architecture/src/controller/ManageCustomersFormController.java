@@ -73,7 +73,7 @@ public class ManageCustomersFormController {
         tblCustomers.getItems().clear();
         /*Get all customers*/
         try {
-            CustomerDAOImpl customers = new CustomerDAOImpl();
+            CustomerDAOInterface customers = new CustomerDAOImpl();
             ArrayList<CustomerDTO> allCustomers = customers.getAllCustomers();
 
             for(CustomerDTO customer : allCustomers){
