@@ -1,11 +1,12 @@
 package dao;
 
 import model.CustomerDTO;
+import model.ItemDTO;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-public class CustomerDAOImpl implements CrudDAO {
+public class CustomerDAOImpl implements CrudDAO <CustomerDTO,String>{
     @Override
     public ArrayList<CustomerDTO> getAll() throws SQLException, ClassNotFoundException {
 
@@ -55,4 +56,15 @@ public class CustomerDAOImpl implements CrudDAO {
             return "C00-001";
         }
     }
+
+    @Override
+    public CustomerDTO search(String id) throws SQLException, ClassNotFoundException {
+        ResultSet rst = SQLUtil.executeQuery("SELECT * FROM customer WHERE id = ?", id);
+        if (rst.next()){
+            return new CustomerDTO(rst.getString(1),rst.getString(2),rst.getString(3));
+        }
+        return null;
+    }
+
+
 }

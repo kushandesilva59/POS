@@ -53,6 +53,19 @@ public class ItemDAOImpl implements CrudDAO<ItemDTO,String>{
             return "I00-001";
         }
     }
+
+    @Override
+    public ItemDTO search(String code) throws SQLException, ClassNotFoundException {
+        ResultSet rst = SQLUtil.executeQuery("SELECT * FROM item WHERE id = ?", code);
+        if(rst.next()){
+            return new ItemDTO(rst.getString(1),rst.getString(2),BigDecimal.valueOf(Double.valueOf(rst.getString(3))),Integer.valueOf(rst.getString(4)));
+        }
+        return null;
+    }
+
+
+
+
     /*@Override
     public boolean save(String code,String description,BigDecimal unitPrice,int qtyOnHand) throws SQLException, ClassNotFoundException {
 
