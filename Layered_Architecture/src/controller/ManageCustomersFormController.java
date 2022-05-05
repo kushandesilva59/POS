@@ -3,8 +3,7 @@ package controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import dao.CustomerDAOImpl;
-import dao.CustomerDAOInterface;
-import db.DBConnection;
+import dao.CrudDAO;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -42,7 +41,7 @@ public class ManageCustomersFormController {
     public TableView<CustomerTM> tblCustomers;
     public JFXButton btnAddNewCustomer;
 
-    CustomerDAOInterface customerDAO = new CustomerDAOImpl();
+    CrudDAO customerDAO = new CustomerDAOImpl();
 
 
     public void initialize() {
